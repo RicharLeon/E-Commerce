@@ -39,6 +39,14 @@ public class OurUsers implements UserDetails {
                 .collect(Collectors.toList());
     }
 
+    @Column(name = "frecuent_user")
+    @Basic(fetch = FetchType.LAZY)
+    private Boolean frecuentUser;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "photo")
+    private byte[] photo;
+
     @Override
     public String getUsername() {
         return email;

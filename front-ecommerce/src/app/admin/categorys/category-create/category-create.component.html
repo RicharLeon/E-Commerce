@@ -1,17 +1,30 @@
-<div class="container mx-auto p-4 flex justify-center">
+<div class="container mx-auto p-4 flex justify-center mt-8 mb-12">
     <div class="card bg-base-200 w-2/4">
-        <div class="card-body">
-            <h2 class="text-xl font-bold mb-4">Formulario de suscripción</h2>
-            <input placeholder="Email" class="input input-bordered" />
-            <label class="label cursor-pointer">
-                Accept terms of use
-                <input type="checkbox" class="toggle" />
-            </label>
-            <label class="label cursor-pointer">
-                Submit to newsletter
-                <input type="checkbox" class="toggle" />
-            </label>
-            <button class="btn btn-neutral">Save</button>
-        </div>
+      <div class="card-body">
+        <h2 class=" text-xl font-bold mb-4 p-4">Formulario de Creación de Productos</h2>
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+          
+          <div class="">
+                        <label for="" class="font-bold ml-3 mt-6 mb-3">Nombre de la categoría</label> <br>
+          </div>
+
+          <input formControlName="nombre" placeholder="Tecnología ..." class="w-full input input-bordered mb-2" />
+          <label for="" class="font-bold ml-3 mt-6">Descripción </label>
+          <input formControlName="descripcion" placeholder="Productos tecnologíc ..." class="w-full input input-bordered mb-2" />
+          <label for="status" class="font-bold ml-3 mt-6">Estado del producto</label>
+        <select formControlName="status" class="w-full input input-bordered mb-2">
+          <option value="" disabled selected>Selecciona el el estado...</option>
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+
+         
+        </select>          
+          <button class="btn btn-success mt-4" type="submit" [disabled]="!productForm.valid">Guardar Producto</button>
+          <a class="btn btn-neutral mt-4 ml-2" href="/categoria-list" > Regresar</a>
+        </form><p>
+   {{ productForm.value | json }}
+</p>
+      </div>
     </div>
-</div>
+  </div>
+  

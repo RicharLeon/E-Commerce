@@ -1,5 +1,5 @@
 <div class="container mx-auto p-4">
-  <h1 class="text-5xl font-bold mb-8">Administrador de categorías</h1>
+  <h1 class="text-5xl font-bold mb-8">Administrador de productos</h1>
 
   <!-- Filtros -->
   <div class="flex gap-4 mb-6">
@@ -7,11 +7,19 @@
       type="text"
       [(ngModel)]="searchQuery"
       (ngModelChange)="applyFilters()"
-      placeholder="Buscar categoría..."
+      placeholder="Buscar productos..."
       class="input input-bordered w-full max-w-xs"
     >
+    <select
+      [(ngModel)]="selectedCategory"
+      (ngModelChange)="applyFilters()"
+      class="select select-bordered"
+    >
+      <option value="">Todas las categorías</option>
+      <option *ngFor="let category of categorys" [value]="category.id">{{ category.name }}</option>
+    </select>
 
-    <a href="/new-category" class="btn btn-secondary ">Agregar categoría</a>
+    <a href="/new-producto" class="btn btn-secondary ">Agregar producto</a>
     <a class="btn btn-neutral " href="/profile" > Regresar</a>
   </div>
 
@@ -21,8 +29,11 @@
       <thead class="bg-base-200">
         <tr>
           <th class="w-12">ID</th>
+          <th>Producto</th>
           <th>Categoría</th>
-          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Estado</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -32,7 +43,7 @@
           <td colspan="7">
             <div class="p-4 flex items-center justify-center">
               <span class="loading loading-spinner text-primary"></span>
-              <span class="ml-2">Cargando categorías...</span>
+              <span class="ml-2">Cargando productos...</span>
             </div>
           </td>
         </tr>
@@ -44,26 +55,54 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span>Error cargando las categorias: {{ errorMessage }}</span>
+              <span>Error cargando los productos: {{ errorMessage }}</span>
             </div>
           </td>
         </tr>
 
         <!-- Datos -->
-        <tr *ngFor="let product of paginatedCategory">
+        <tr *ngFor="let product of paginatedProducts">
           <td>{{ product.id }}</td>
           <td>
             <div class="flex items-center gap-3">
+              <div class="avatar">
+                <div class="mask mask-squircle w-12 h-12">
+                  <img [src]="product.photo" [alt]="product.name" />
+                </div>
+              </div>
               <div>
                 <div class="font-bold">{{ product.name }}</div>
               </div>
             </div>
           </td>
-          <td>{{ product.description }}</td>
-
+          <td>{{ product.nameCategory }}</td>
+          <td>${{ product.price.toFixed(2) }}</td>
           <td>
-            <button class="btn btn-ghost btn-xs" (click)="product.id && editCategory(product.id)">Editar</button>
-            <button class="btn btn-ghost btn-xs text-error" (click)="product.id && deleteCategory(product.id)">Eliminar</button>
+            <span
+              class="badge"
+              [ngClass]="{
+                'badge-success': product.stock > 10,
+                'badge-warning': product.stock <= 10 && product.stock > 0,
+                'badge-error': product.stock === 0
+              }"
+            >
+              {{ product.stock }} unidades
+            </span>
+          </td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                'badge-success': product.status,
+                'badge-error': !product.status
+              }"
+            >
+              {{ product.status ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-ghost btn-xs">Editar</button>
+            <button class="btn btn-ghost btn-xs text-error" (click)="deleteProduct(product.id)">Eliminar</button>
           </td>
         </tr>
       </tbody>
