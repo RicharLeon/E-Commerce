@@ -44,8 +44,8 @@ export class ProductService {
   }
 
   // Update a product
-  updateProduct(product: Product): Observable<Product[]> {
-    return this.http.put<Product[]>(`${this.apiUrl}/${product.id}`, product).pipe(
+  updateProduct(id: number,product: Product): Observable<Product[]> {
+    return this.http.put<Product[]>(`${this.apiUrl}/${id}`, product).pipe(
       catchError(error => {
         console.error('Error updating product', error);
         return throwError(() => error);

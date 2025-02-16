@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../service/products.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Product } from '../../../models/product';
 import { RangePipe } from '../../../pipes/range.pipe';
 import { Category } from '../../../models/category';
 import { CategoryService } from '../../service/category.service';
+import { Router } from '@angular/router';
+import localeEs from '@angular/common/locales/es';
 
 
 @Component({
@@ -29,7 +31,8 @@ export class ProductsTableComponent implements OnInit {
   itemsPerPage = 10;
 
   constructor(private productService: ProductService, 
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -96,5 +99,12 @@ export class ProductsTableComponent implements OnInit {
       });
     }
   }
+
+  editProduct(categoryId: number) {
+    // Navega a la ruta de edición, por ejemplo: /edit-category/:id
+    this.router.navigate(['/edit-product', categoryId]);
+  }
+
+
 
 }

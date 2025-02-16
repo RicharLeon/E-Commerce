@@ -13,6 +13,7 @@ import { ProductsCreateComponent } from './admin/products/products-create/produc
 import { CategoryListComponent } from './admin/categorys/category-list/category-list.component';
 import { CategoryCreateComponent } from './admin/categorys/category-create/category-create.component';
 import { CategoryEditComponent } from './admin/categorys/category-edit/category-edit.component';
+import { ProductsEditComponent } from './admin/products/products-edit/products-edit.component';
 
 export const routes: Routes = [
     {path: 'login', component: LoginComponent},
@@ -29,7 +30,7 @@ export const routes: Routes = [
     {path: 'new-category', component: CategoryCreateComponent},
 //rutas editar
     {path: 'edit-category/:id', component: CategoryEditComponent},
-
+    {path: 'edit-product/:id', component: ProductsEditComponent},
     {path: '**', component: PrincipalComponent},
     {path: '', redirectTo: '/principal', pathMatch: 'full'},
 ];

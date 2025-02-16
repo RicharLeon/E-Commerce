@@ -76,7 +76,13 @@
             </div>
           </td>
           <td>{{ product.nameCategory }}</td>
-          <td>${{ product.price.toFixed(2) }}</td>
+            <td>
+            <span>
+              {{ product.price | currency:'COL ':'symbol':'1.2-2':'en' }}
+            </span>
+
+            
+          </td>
           <td>
             <span
               class="badge"
@@ -101,8 +107,8 @@
             </span>
           </td>
           <td>
-            <button class="btn btn-ghost btn-xs">Editar</button>
-            <button class="btn btn-ghost btn-xs text-error" (click)="deleteProduct(product.id)">Eliminar</button>
+            <button class="btn btn-ghost btn-xs" (click)="product.id && editProduct(product.id)">Editar</button>
+            <button class="btn btn-ghost btn-xs text-error" (click)="product.id && deleteProduct(product.id)">Eliminar</button>
           </td>
         </tr>
       </tbody>

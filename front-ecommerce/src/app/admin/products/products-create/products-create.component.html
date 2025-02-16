@@ -13,7 +13,7 @@
 
         <!-- Categoría del producto -->
         <label class="font-bold ml-3 mt-6">Categoría del producto</label>
-        <select formControlName="nameCategory" class="select select-bordered w-full mb-2">
+        <select formControlName="idCategory" class="select select-bordered w-full mb-2">
           <option value="">Selecciona una categoría</option>
           <option *ngFor="let category of categories" [value]="category.id">
             {{ category.name }}
@@ -24,10 +24,11 @@
         <label class="font-bold ml-3 mt-6">Precio del producto</label>
         <input
           formControlName="price"
-          placeholder="10.000.000 ..."
-          type="number"
-          class="w-full input input-bordered mb-2"
-        />
+            placeholder="1.000.000 ..."
+            type="text"
+            class="w-full input input-bordered mb-2"
+            (input)="formatPrice($event)"
+          />
 
         <!-- Unidades -->
         <label class="font-bold ml-3 mt-6">Unidades</label>
@@ -49,15 +50,7 @@
          
         </select>  
 
-        <!-- Descripción del producto -->
-        <label class="font-bold ml-3 mt-6">Descripción del producto</label>
-        <input
-          formControlName="descripcion"
-          placeholder="Teléfono reconocido por su ..."
-          type="text"
-          class="w-full input input-bordered mb-2"
-        />
-
+      
         <!-- Foto del producto -->
         <label class="font-bold ml-3 mt-6">Foto del producto</label>
         <input

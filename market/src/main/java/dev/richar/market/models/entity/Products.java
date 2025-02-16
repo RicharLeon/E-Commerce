@@ -1,7 +1,7 @@
 package dev.richar.market.models.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.util.Lazy;
 
 import java.time.LocalDate;
@@ -9,7 +9,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Products {
 
     @Id

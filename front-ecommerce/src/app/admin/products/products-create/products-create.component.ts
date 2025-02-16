@@ -21,6 +21,9 @@ import { Router, RouterLink } from '@angular/router';
   styleUrls: ['./products-create.component.css'] // Corregido: styleUrls en plural
 })
 export class ProductsCreateComponent implements OnInit {
+
+
+
   categories: Category[] = []; // Renombrado para mayor claridad
 
   productForm: FormGroup;
@@ -33,11 +36,10 @@ export class ProductsCreateComponent implements OnInit {
   ) {
     this.productForm = this.fb.group({
       nombre: ['', Validators.required],
-      nameCategory: ['', Validators.required],
+      idCategory: ['', Validators.required],
       price: ['', Validators.required],
       stock: ['', Validators.required],
       status: ['', Validators.required],
-      descripcion: ['', Validators.required],
       photo: ['', Validators.required],
       disponible: [false], // Nuevo control para el checkbox
     });
@@ -52,20 +54,30 @@ export class ProductsCreateComponent implements OnInit {
       console.log(this.productForm.value);
 
 
-      const selectedCategoryId = this.productForm.value.idCategory;
-      const selectedCategoryName = this.categories.find(
-        category => category.id === selectedCategoryId); 
+      // convertirlo a number
+
+      // Obtener el ID y el nombre de la categoría seleccionada y convertirlo a numebr
+      const selectedCategoryId = Number(this.productForm.value.idCategory);
+         
+      // convertir el precio a número
+      const priceString = this.productForm.value.price.replace(/\D/g, '');
+      const priceNumber = parseFloat(priceString); // Divide si manejas centavos
+      
+      console.log('id convertido', selectedCategoryId);
 
       const product: Product = {
         //id: 0, // El ID se asigna en el servidor
         name: this.productForm.value.nombre,
-        idCategory: this.productForm.value.idCategory,
-        nameCategory: selectedCategoryName ? selectedCategoryName.name : '',
-        price: this.productForm.value.price,
+        idCategory: selectedCategoryId,
+        //nameCategory: selectedCategoryName ? selectedCategoryName.name : '',
+        price: priceNumber,
         stock: this.productForm.value.stock,
         status: this.productForm.value.status === 'activo' ? true : false,
         photo: this.productForm.value.photo        
       };
+
+      confirm('¿Desea guardar el producto?');
+      console.log('Producto a guardar', product); 
 
       this.saveProduct(product);
     } else {
@@ -115,6 +127,13 @@ export class ProductsCreateComponent implements OnInit {
       console.log('Categorías', res);
       this.categories = res;
     });
+  }
+
+  // Dar formato al precio
+  formatPrice($event: Event) {
+    const input = $event.target as HTMLInputElement;
+    const value = input.value.replace(/\D/g, '');
+    input.value = `$${value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}`;
   }
 
 
