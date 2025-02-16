@@ -1,1 +1,78 @@
-<p>userlist works!</p>
+
+<div class="container mx-auto p-4">
+    <h1 class="text-5xl font-bold mb-8">Administrador de Usuarios</h1>
+  
+    <!-- Filtros -->
+    <div class="flex gap-4 mb-6">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="applyFilters()"
+        placeholder="Buscar usuarios..."
+        class="input input-bordered w-full max-w-xs"
+      >
+
+      <a class="btn btn-neutral " href="/profile" > Regresar</a>
+    </div>
+  
+    <!-- Tabla -->
+    <div class="overflow-x-auto rounded-lg shadow-lg">
+      <table class="table table-zebra">
+        <thead class="bg-base-200">
+          <tr>
+            <th class="w-12">ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>City</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loading -->
+          <tr *ngIf="loading">
+            <td colspan="7">
+              <div class="p-4 flex items-center justify-center">
+                <span class="loading loading-spinner text-primary"></span>
+                <span class="ml-2">Cargando usuarios...</span>
+              </div>
+            </td>
+          </tr>
+  
+          <!-- Error -->
+          <tr *ngIf="error">
+            <td colspan="7">
+              <div class="alert alert-error">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Error cargando los productos: {{ errorMessage }}</span>
+              </div>
+            </td>
+          </tr>
+  
+          <!-- Datos -->
+          <tr *ngFor="let user of paginatedUsers" key="user.id">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.city }}</td>
+            <td>
+                <button class="btn btn-ghost btn-xs" *ngIf="user.id !== undefined" (click)="navigateToUpdate(user.id)">editar</button>
+            </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Paginación -->
+    <div class="join mt-4">
+      <button
+        *ngFor="let page of totalPages | range"
+        class="join-item btn"
+        [class.btn-active]="currentPage === page"
+        (click)="currentPage = page"
+      >
+        {{ page }}
+      </button>
+    </div>
+  </div>

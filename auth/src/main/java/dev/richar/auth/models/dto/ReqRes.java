@@ -20,7 +20,7 @@ public class ReqRes {
     private String expirationTime;
     private String name;
     private String city;
-    private String role;
+    private List<String> role;
     private String email;
     private String password;
     private OurUsers ourUsers;

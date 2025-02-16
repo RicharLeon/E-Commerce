@@ -54,7 +54,7 @@ public class UsersManagementService {
                         .stream()
                         .map(ERole::name)
                         .collect(Collectors.joining(", "));
-                resp.setRole(rolesString);
+                resp.setRole(Collections.singletonList(rolesString));
                 resp.setOurUsers((ourUsersResult));
                 resp.setMessage("User Saved Successfully");
                 resp.setStatusCode(200);
@@ -82,7 +82,7 @@ public class UsersManagementService {
             String rolesString = user.getRoles().stream()
                     .map(ERole::name)
                     .collect(Collectors.joining(", "));
-            response.setRole(rolesString);
+            response.setRole(Collections.singletonList(rolesString));
             response.setRefreshToken(refreshToken);
             response.setExpirationTime("24Hrs");
             response.setMessage("Successfully Logged In");
@@ -201,7 +201,8 @@ public class UsersManagementService {
             // 3. Actualizar roles (si se proporcionan)
             if (updateRequest.getRole() != null && !updateRequest.getRole().isEmpty()) {
                 try {
-                    Set<ERole> newRoles = Arrays.stream(updateRequest.getRole().split(","))
+                    Set<ERole> newRoles = updateRequest.getRole()
+                            .stream()
                             .map(String::trim)
                             .map(ERole::valueOf)
                             .collect(Collectors.toSet());
@@ -228,7 +229,7 @@ public class UsersManagementService {
 
             resp.setStatusCode(200);
             resp.setMessage("Usuario actualizado exitosamente");
-            resp.setRole(rolesString);
+            resp.setRole(Collections.singletonList(rolesString));
             resp.setOurUsers(updatedUser);
 
         } catch (Exception e) {
