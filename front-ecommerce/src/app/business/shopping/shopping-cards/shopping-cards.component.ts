@@ -20,6 +20,7 @@ import { UsersService } from '../../../auth/services/users.service';
 export class ShoppingCardsComponent implements OnInit {
 
   descuento: any;
+  totalConDescuentos: number = 0;
 
   idUser: any;
   profileInfo: any;
@@ -80,6 +81,8 @@ export class ShoppingCardsComponent implements OnInit {
       this.dataItems = res;
       
       this.sumaTotal(this.dataItems); 
+
+      this.calcularPorcentaje(this.total, this.descuento);
       this.dataItems.forEach((item: any) => {
         this.cantidadItems[item.idProduct] = item.cantidad;
       });
@@ -110,8 +113,17 @@ export class ShoppingCardsComponent implements OnInit {
         this.total += item.cantidad * item.price;
       });
       console.log("esta es la suma", this.total);
-      return this.total;
 
+      
+      return this.total- this.descuento;
+
+    }
+
+    calcularPorcentaje(cantidad: number, porcentaje: number): number {
+      let resultado = (cantidad * porcentaje) / 100;
+      this.totalConDescuentos = cantidad - resultado;
+
+      return this.totalConDescuentos;
     }
 
     validarDescuentos(): void {

@@ -63,14 +63,13 @@
 
     <ul class="list-disc list-inside text-gray-700">
       <li><span class="font-bold">DESCUENTO DEL </span> {{ descuento}}% - de descuento</li>
-      <li><span class="font-bold">ENVIOFREE</span> - Envío gratis</li>
-      <li><span class="font-bold">VIP20</span> - 20% para clientes VIP</li>
+
     </ul>
   </div>
 
   <div class="flex justify-end items-start">
-    <button class="btn btn-sm  bg-indigo-50 w-44 h-24 text-indigo-600 font-extrabold">
-      Producto Aleatorio ?
+    <button class="btn btn-sm  bg-indigo-200 w-44 h-24 text-indigo-600 font-extrabold">
+      Añadir Producto Aleatorio ?
     </button>
   </div>
 </div>
@@ -79,12 +78,17 @@
     <!-- Resumen: Subtotal y Checkout -->
     <div class="card rounded-2xl border-2 border-gray-200 p-6">
       <div class="flex flex-col md:flex-row items-center justify-between border-b border-gray-200 pb-6 mb-6">
-        <h5 class="text-gray-900 font-bold text-2xl">Subtotal</h5>
+        <h5 class="text-gray-900 font-bold text-xl">Subtotal</h5>
         <div class="flex items-center gap-5">
-          <button class="btn btn-ghost btn-sm bg-indigo-50 text-indigo-600">
-            Promo Code?
-          </button>
-          <h6 class="text-indigo-600 font-bold text-3xl">$ {{ total | currency:'COL ':'symbol':'1.2-2':'en' }}</h6>
+         
+          <h6 class="text-red-600 font-bold text-2xl">$ {{ total | currency:'COL ':'symbol':'1.2-2':'en' }}</h6>
+        </div>
+      </div>
+      <div class="flex flex-col md:flex-row items-center justify-between border-b border-gray-200 pb-6 mb-6">
+        <h5 class="text-gray-900 font-bold text-2xl">Total con descuentos</h5>
+        <div class="flex items-center gap-5">
+         
+          <h6 class="text-indigo-600 font-bold text-3xl">$ {{ totalConDescuentos | currency:'COL ':'symbol':'1.2-2':'en' }}</h6>
         </div>
       </div>
       <p class="text-gray-500 text-center mb-6">
