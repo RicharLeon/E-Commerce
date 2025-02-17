@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './shopping-cards.component.css'
 })
 export class ShoppingCardsComponent implements OnInit {
+  total: number = 0;
   carritoId: any;
   dataItems: any[] = [];
   idProductoRecuperdao: any;
@@ -49,6 +50,8 @@ export class ShoppingCardsComponent implements OnInit {
   getItems(id: number): void {
     this.carritoItemsService.getItems(id).subscribe((res: any) => {
       this.dataItems = res;
+      
+      this.sumaTotal(this.dataItems); 
       this.dataItems.forEach((item: any) => {
         this.cantidadItems[item.idProduct] = item.cantidad;
       });
@@ -71,7 +74,17 @@ export class ShoppingCardsComponent implements OnInit {
       return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
     }
 
-    ;
+    sumaTotal(data: any ): number {
+
+      this.total = 0;
+
+      data.forEach((item: any) => {
+        this.total += item.cantidad * item.price;
+      });
+      console.log("esta es la suma", this.total);
+      return this.total;
+
+    }
 
 
 

@@ -45,7 +45,7 @@
               </button>
             </div>
             <!-- Precio -->
-            <h6 class="text-indigo-600 font-bold text-2xl">$ {{ product.price }}</h6>
+            <h6 class="text-indigo-600 font-bold text-2xl">$  {{ product.price | currency:'COL ':'symbol':'1.2-2':'en' }}</h6>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
             <button class="btn btn-ghost btn-sm bg-indigo-50 text-indigo-600">
               Promo Code?
             </button>
-            <h6 class="text-indigo-600 font-bold text-3xl">$400</h6>
+            <h6 class="text-indigo-600 font-bold text-3xl">$  {{ total | currency:'COL ':'symbol':'1.2-2':'en' }}</h6>
           </div>
         </div>
         <p class="text-gray-500 text-center mb-6">
