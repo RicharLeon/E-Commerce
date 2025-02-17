@@ -12,4 +12,7 @@ public class Parametricas {
 
     @Column(name = "NOMBRE")
     private String nombre;
+
+    @Column(name = "VALOR")
+    private String valor;
 }

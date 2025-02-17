@@ -2,9 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CarritoItemsInterface } from '../../../models/carrito-items';
 import { CarritoItemsService } from '../../service/carrito-items.service';
 import { ActivatedRoute } from '@angular/router';
+
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CarritoService } from '../../service/carrito.service';
+import { CarritoInterface } from '../../../models/carrito';
+import { UsersService } from '../../../auth/services/users.service';
 
 @Component({
   selector: 'app-shopping-cards',
@@ -14,9 +18,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './shopping-cards.component.css'
 })
 export class ShoppingCardsComponent implements OnInit {
+
+  descuento: any;
+
+  idUser: any;
+  profileInfo: any;
   total: number = 0;
   carritoId: any;
   dataItems: any[] = [];
+  validarCarrito:any;
   idProductoRecuperdao: any;
   cantidadItems: { [id: number]: number } = {};
 
@@ -24,12 +34,30 @@ export class ShoppingCardsComponent implements OnInit {
     private carritoItemsService: CarritoItemsService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-  ) { }
+    private carritoService: CarritoService,
+    private usersService: UsersService
+  ) {
+    
+   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.carritoId = Number(this.route.snapshot.paramMap.get('id'));
     console.log('carritoId:', this.carritoId); // Verifica que sea el valor esperado
     this.getItems(this.carritoId);
+
+    this.validarDescuentos() ; 
+
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        throw new Error("No Token Found")
+      }
+
+      this.profileInfo = await this.usersService.getYourProfile(token);
+      this.idUser = this.profileInfo.ourUsers.id;
+    } catch (error: any) {
+      console.log(error.message)
+    }
 
   }
   disminuirCantidad(product: any): void {
@@ -84,6 +112,18 @@ export class ShoppingCardsComponent implements OnInit {
       console.log("esta es la suma", this.total);
       return this.total;
 
+    }
+
+    validarDescuentos(): void {
+      this.validarCarrito = {
+        idCarrito: this.carritoId,
+        idUsuario: this.idUser
+      } as CarritoInterface;
+      this.carritoService.validarSiCuentaConDescuentos(this.validarCarrito).subscribe((res: any) => {
+
+        this.descuento =  res;
+        console.log('descuentos:', res);
+      });
     }
 
 

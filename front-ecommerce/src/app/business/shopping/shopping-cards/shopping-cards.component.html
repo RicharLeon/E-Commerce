@@ -1,85 +1,98 @@
 <section class="py-24 relative bg-gray-50">
-    <div class="container mx-auto max-w-7xl px-4 md:px-5">
-      <!-- Título del carrito -->
-      <h2 class="title font-bold text-4xl leading-10 mb-8 text-center text-gray-900">
-        Shopping Cart
-      </h2>
-  
-      <!-- Artículo 1 -->
-      <div *ngFor="let product of dataItems" class="card rounded-3xl border-2 border-gray-200 p-4 lg:p-8 grid grid-cols-12 gap-y-4 mb-8">
-        <!-- Imagen -->
-         
-        <div class="col-span-12 lg:col-span-2">
-          <img [src]="getSafeImageUrl(product.photo || '')" [alt]="product.name" class="rounded" />
+  <div class="container mx-auto max-w-7xl px-4 md:px-5">
+    <!-- Título del carrito -->
+    <h2 class="title font-bold text-4xl leading-10 mb-8 text-center text-gray-900">
+      Shopping Cart
+    </h2>
+
+    <!-- Artículo 1 -->
+    <div *ngFor="let product of dataItems"
+      class="card rounded-3xl border-2 border-gray-200 p-4 lg:p-8 grid grid-cols-12 gap-y-4 mb-8">
+      <!-- Imagen -->
+
+      <div class="col-span-12 lg:col-span-2">
+        <img [src]="getSafeImageUrl(product.photo || '')" [alt]="product.name" class="rounded" />
+      </div>
+      <!-- Detalles del producto -->
+      <div class="col-span-12 lg:col-span-10 lg:pl-3">
+        <div class="flex items-center justify-between mb-4">
+          <h5 class="font-bold text-2xl text-gray-900">
+            <span class="text-xl font-bold">{{ product.id }}</span> - {{ product.name }}
+          </h5>
+          <!-- Botón para eliminar artículo -->
+          <button class="btn btn-circle btn-ghost" title="Eliminar artículo">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
-        <!-- Detalles del producto -->
-        <div class="col-span-12 lg:col-span-10 lg:pl-3">
-          <div class="flex items-center justify-between mb-4">
-            <h5 class="font-bold text-2xl text-gray-900">
-              <span class="text-xl font-bold">{{ product.id }}</span> - {{ product.name }}
-            </h5>
-            <!-- Botón para eliminar artículo -->
-            <button class="btn btn-circle btn-ghost" title="Eliminar artículo">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <p class="text-gray-500 mb-6">
+          {{ product.description }}
+          <a href="#" class="text-indigo-600 hover:underline">Más detalles...</a>
+        </p>
+        <div class="flex items-center justify-between">
+          <!-- Controles de cantidad -->
+          <div class="flex items-center gap-4">
+            <button class="btn btn-outline btn-circle btn-sm" title="Disminuir" (click)="disminuirCantidad(product)">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+              </svg>
+            </button>
+            <input type="text" [(ngModel)]="product.cantidad" class="input input-bordered w-12 text-center" />
+            <button class="btn btn-outline btn-circle btn-sm" title="Aumentar" (click)="aumentarCantidad(product)">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
               </svg>
             </button>
           </div>
-          <p class="text-gray-500 mb-6">
-            {{ product.description }}
-            <a href="#" class="text-indigo-600 hover:underline">Más detalles...</a>
-          </p>
-          <div class="flex items-center justify-between">
-            <!-- Controles de cantidad -->
-            <div class="flex items-center gap-4">
-              <button class="btn btn-outline btn-circle btn-sm" title="Disminuir" (click)="disminuirCantidad(product)">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-                </svg>
-              </button>
-              <input type="text" [(ngModel)]="product.cantidad"  class="input input-bordered w-12 text-center" />
-              <button class="btn btn-outline btn-circle btn-sm" title="Aumentar" (click)="aumentarCantidad(product)">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                </svg>
-              </button>
-            </div>
-            <!-- Precio -->
-            <h6 class="text-indigo-600 font-bold text-2xl">$  {{ product.price | currency:'COL ':'symbol':'1.2-2':'en' }}</h6>
-          </div>
+          <!-- Precio -->
+          <h6 class="text-indigo-600 font-bold text-2xl">$ {{ product.price | currency:'COL ':'symbol':'1.2-2':'en' }}
+          </h6>
         </div>
-      </div>
-  
-
-  
-      <!-- Lista de códigos de descuento -->
-      <div class="card bg-base-100 shadow-xl rounded-2xl p-6 mb-8">
-        <h3 class="text-lg font-bold mb-4">Códigos de descuento</h3>
-        <ul class="list-disc list-inside text-gray-700">
-          <li><span class="font-bold">DESCUENTO10</span> - 10% de descuento</li>
-          <li><span class="font-bold">ENVIOFREE</span> - Envío gratis</li>
-          <li><span class="font-bold">VIP20</span> - 20% para clientes VIP</li>
-        </ul>
-      </div>
-  
-      <!-- Resumen: Subtotal y Checkout -->
-      <div class="card rounded-2xl border-2 border-gray-200 p-6">
-        <div class="flex flex-col md:flex-row items-center justify-between border-b border-gray-200 pb-6 mb-6">
-          <h5 class="text-gray-900 font-bold text-2xl">Subtotal</h5>
-          <div class="flex items-center gap-5">
-            <button class="btn btn-ghost btn-sm bg-indigo-50 text-indigo-600">
-              Promo Code?
-            </button>
-            <h6 class="text-indigo-600 font-bold text-3xl">$  {{ total | currency:'COL ':'symbol':'1.2-2':'en' }}</h6>
-          </div>
-        </div>
-        <p class="text-gray-500 text-center mb-6">
-          Shipping, taxes y descuentos se calcularán en el checkout.
-        </p>
-        <button class="btn btn-primary w-full py-4 text-lg hover:bg-indigo-700">
-          Checkout
-        </button>
       </div>
     </div>
-  </section>
-  
+
+
+<!-- Lista de códigos de descuento -->
+<div class="grid grid-cols-2 card bg-base-100 shadow-xl rounded-2xl p-6 mb-8">
+  <div>
+    <h3 class="text-lg font-bold mb-4">Códigos de descuento</h3>
+
+    <ul class="list-disc list-inside text-gray-700">
+      <li><span class="font-bold">DESCUENTO DEL </span> {{ descuento}}% - de descuento</li>
+      <li><span class="font-bold">ENVIOFREE</span> - Envío gratis</li>
+      <li><span class="font-bold">VIP20</span> - 20% para clientes VIP</li>
+    </ul>
+  </div>
+
+  <div class="flex justify-end items-start">
+    <button class="btn btn-sm  bg-indigo-50 w-44 h-24 text-indigo-600 font-extrabold">
+      Producto Aleatorio ?
+    </button>
+  </div>
+</div>
+
+
+    <!-- Resumen: Subtotal y Checkout -->
+    <div class="card rounded-2xl border-2 border-gray-200 p-6">
+      <div class="flex flex-col md:flex-row items-center justify-between border-b border-gray-200 pb-6 mb-6">
+        <h5 class="text-gray-900 font-bold text-2xl">Subtotal</h5>
+        <div class="flex items-center gap-5">
+          <button class="btn btn-ghost btn-sm bg-indigo-50 text-indigo-600">
+            Promo Code?
+          </button>
+          <h6 class="text-indigo-600 font-bold text-3xl">$ {{ total | currency:'COL ':'symbol':'1.2-2':'en' }}</h6>
+        </div>
+      </div>
+      <p class="text-gray-500 text-center mb-6">
+        Shipping, taxes y descuentos se calcularán en el checkout.
+      </p>
+      <button class="btn btn-primary w-full py-4 text-lg hover:bg-indigo-700">
+        Checkout
+      </button>
+    </div>
+  </div>
+</section>

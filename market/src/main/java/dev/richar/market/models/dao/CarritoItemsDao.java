@@ -17,7 +17,7 @@ public interface CarritoItemsDao extends JpaRepository<CarritoItems, Integer> {
             "WHERE p.estado_pago = :estadoPago AND c.id_carrito = :idCarrito", nativeQuery = true)
     Optional<Carrito> findCompletedPaysByCarritoId(String estadoPago, Integer idCarrito);
 
-    @Query(value = "SELECT id_product, id_carrito_item, cantidad, id_category, name, photo, price, status, stock, description " +
+    @Query(value = "SELECT is_random, id_product, id_carrito_item, cantidad, id_category, name, photo, price, status, stock, description " +
             "FROM carrito_items c " +
             "INNER JOIN products p ON (p.id_product = c.id_producto) " +
             "WHERE id_carrito = :idCarrito", nativeQuery = true)

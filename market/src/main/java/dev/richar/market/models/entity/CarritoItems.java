@@ -17,6 +17,9 @@ public class CarritoItems {
     private Integer idProducto;
     @Column(name = "cantidad")
     private Integer cantidad;
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "is_random")
+    private Boolean isRandom;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_carrito", insertable = false, updatable = false)

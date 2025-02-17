@@ -42,4 +42,11 @@ public class CarritoController {
         carritoService.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/descuento")
+    public ResponseEntity<?> validarDescuento(@RequestBody Carrito carrito){
+        double respuesta = carritoService.validarSiCuentaConDescuentos(carrito);
+        return ResponseEntity.ok(respuesta);
+    }
+
 }

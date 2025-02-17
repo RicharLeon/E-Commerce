@@ -3,15 +3,19 @@ package dev.richar.market.models.services;
 import dev.richar.market.models.dao.CarritoDao;
 import dev.richar.market.models.dao.CarritoItemsDao;
 import dev.richar.market.models.dto.CarritoItemsConsultaDTO;
+import dev.richar.market.models.dto.ProductsConsultaDTO;
 import dev.richar.market.models.entity.Carrito;
 import dev.richar.market.models.entity.CarritoItems;
+import dev.richar.market.models.entity.Products;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,8 +24,11 @@ public class CarritoItemsServiceImpl implements ICarritoItemsService {
 
     @Autowired
     private final CarritoItemsDao carritoItemsDao;
+    @Lazy
     @Autowired
     private final ICarritoService carritoService;
+    @Autowired
+    private final IProductsService productsService;
 
     @Override
     public List<CarritoItems> findAll() {
@@ -102,6 +109,30 @@ public class CarritoItemsServiceImpl implements ICarritoItemsService {
     @Override
     public List<CarritoItemsConsultaDTO> getItemsByUserAndCarrito(Integer idUser) {
         return carritoItemsDao.findCarritoItemsWithProductDetailsByCarritoId(idUser);
+    }
+
+
+    public void addItemAleatorio(CarritoItems carritoItems){
+
+        List<ProductsConsultaDTO> productosDisponibles = productsService.findAll();
+
+        List<Integer> idProductos = productosDisponibles.stream()
+                .map(ProductsConsultaDTO::getId)
+                .collect(Collectors.toList());
+
+        // Genera un índice aleatorio para seleccionar un producto
+        int indiceAleatorio = (int) (Math.random() * idProductos.size());
+        int idProductoAleatorio = idProductos.get(indiceAleatorio);
+
+        // genera numero aleatorio entre 1 y 10
+        int cantidadAleatoria = (int) (Math.random() * 10) + 1;
+
+                CarritoItems newCarritoItems = new CarritoItems();
+        newCarritoItems.setCantidad(cantidadAleatoria);
+        newCarritoItems.setIdProducto(idProductoAleatorio);
+        newCarritoItems.setIdCarrito(carritoItems.getIdCarrito());
+        newCarritoItems.setIsRandom(true);
+        carritoItemsDao.save(newCarritoItems);
     }
 
 

@@ -39,4 +39,14 @@ export class CarritoService {
         })
       );
     }
+
+    validarSiCuentaConDescuentos(carrito: CarritoInterface): Observable<CarritoInterface> {
+      return this.http.post<CarritoInterface>(`${this.apiUrl}/descuento`, carrito).pipe(
+        catchError(error => {
+          console.error('Error getting product', error);
+          return throwError(() => error);
+        })
+      );
+    }
+
 }

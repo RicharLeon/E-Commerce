@@ -16,4 +16,5 @@ public interface ICarritoService {
     Carrito save(Carrito carrito);
     void delete(Integer id);
     Carrito update (Carrito carrito, Integer id);
+    double validarSiCuentaConDescuentos(Carrito carrito);
 }
