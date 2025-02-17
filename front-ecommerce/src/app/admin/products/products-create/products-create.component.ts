@@ -40,6 +40,7 @@ export class ProductsCreateComponent implements OnInit {
       price: ['', Validators.required],
       stock: ['', Validators.required],
       status: ['', Validators.required],
+      description: ['', Validators.required], // Nuevo control para la descripción
       photo: ['', Validators.required],
       disponible: [false], // Nuevo control para el checkbox
     });
@@ -73,6 +74,7 @@ export class ProductsCreateComponent implements OnInit {
         price: priceNumber,
         stock: this.productForm.value.stock,
         status: this.productForm.value.status === 'activo' ? true : false,
+        description: this.productForm.value.description,
         photo: this.productForm.value.photo        
       };
 

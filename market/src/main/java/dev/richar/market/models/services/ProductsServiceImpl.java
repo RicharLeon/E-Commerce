@@ -40,8 +40,8 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
-    public Products save(Products empleado) {
-        return productsDao.save(empleado);
+    public Products save(Products product) {
+        return productsDao.save(product);
     }
 
     @Override
@@ -53,19 +53,20 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
-    public Products update(Products empleado, Integer id) {
+    public Products update(Products product, Integer id) {
         Products products = productsDao.findById(id)
                 .orElseThrow(() -> new RuntimeException(MessageFormat
                         .format("Product with id {0} not found", id)));
 
 
-        products.setName(empleado.getName());
-        products.setIdCategory(empleado.getIdCategory());
-        products.setPrice(empleado.getPrice());
-        products.setStock(empleado.getStock());
-        products.setStatus(empleado.getStatus());
-        products.setPhoto(empleado.getPhoto());
-        products.setUpdatedAt(empleado.getUpdatedAt());
+        products.setName(product.getName());
+        products.setIdCategory(product.getIdCategory());
+        products.setPrice(product.getPrice());
+        products.setStock(product.getStock());
+        products.setStatus(product.getStatus());
+        products.setDescription(product.getDescription());
+        products.setPhoto(product.getPhoto());
+        products.setUpdatedAt(product.getUpdatedAt());
         return productsDao.save(products);
 
     }
@@ -103,6 +104,7 @@ public class ProductsServiceImpl implements IProductsService {
                 product.getPrice(),
                 product.getStock(),
                 product.getStatus(),
+                product.getDescription(),
                 product.getPhoto(),
                 product.getCreatedAt(),
                 product.getUpdatedAt()

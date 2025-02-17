@@ -33,6 +33,7 @@ export class ProductsEditComponent implements OnInit {
       price: ['',],
       stock: ['',],
       status: ['',],
+      description: ['',],
       photo: ['',],
     });
   }
@@ -61,6 +62,7 @@ export class ProductsEditComponent implements OnInit {
         price: res.price,
         stock: res.stock,
         status: res.status ? 'activo' : 'inactivo',
+        description: res.description,
         photo: res.photo
       });
     });
@@ -111,6 +113,7 @@ export class ProductsEditComponent implements OnInit {
         price: priceNumber,
         stock: this.productForm.value.stock,
         status: this.productForm.value.status === 'activo' ? true : false,
+        description: this.productForm.value.description,
         photo: this.productForm.value.photo
       };
 

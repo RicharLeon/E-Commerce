@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
       }
 
       this.profileInfo = await this.userService.getYourProfile(token);
-      console.log(this.profileInfo);
+      console.log(this.profileInfo.ourUsers.id);
     } catch (error:any) {
       this.showError(error.message)
     }

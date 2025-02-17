@@ -14,6 +14,7 @@ import { CategoryListComponent } from './admin/categorys/category-list/category-
 import { CategoryCreateComponent } from './admin/categorys/category-create/category-create.component';
 import { CategoryEditComponent } from './admin/categorys/category-edit/category-edit.component';
 import { ProductsEditComponent } from './admin/products/products-edit/products-edit.component';
+import { ShoppingCardsComponent } from './business/shopping/shopping-cards/shopping-cards.component';
 
 export const routes: Routes = [
     {path: 'login', component: LoginComponent},
@@ -22,7 +23,7 @@ export const routes: Routes = [
     {path: 'update/:id', component: UpdateuserComponent},
     {path: 'users', component: UserlistComponent, canActivate:[adminGuard]},
     {path: 'principal', component: PrincipalComponent},
-    {path: 'product-overviews', component: ProductOverviewsComponent},
+    {path: 'product-overviews/:id', component: ProductOverviewsComponent},
     {path: 'productos-list', component: ProductsTableComponent},
     {path: 'categoria-list', component: CategoryListComponent},
     {path: 'auth-list', component: UserlistComponent},
@@ -31,6 +32,9 @@ export const routes: Routes = [
 //rutas editar
     {path: 'edit-category/:id', component: CategoryEditComponent},
     {path: 'edit-product/:id', component: ProductsEditComponent},
+
+    // ruta de carrito
+    {path: 'shopping-card/:id', component: ShoppingCardsComponent},
     {path: '**', component: PrincipalComponent},
     {path: '', redirectTo: '/principal', pathMatch: 'full'},
 ];

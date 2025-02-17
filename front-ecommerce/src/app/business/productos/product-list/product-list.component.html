@@ -1,14 +1,14 @@
-<!-- Product grid -->
+
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-  <div *ngFor="let product of products" class="flex justify-center ">
+  <div *ngFor="let product of productos" class="flex justify-center ">
     <div 
-    (click)="onProductClick(product.id)"
+    (click)="product.id &&  onProductClick(product.id)"
     class="card bg-base-100 w-64 shadow-xl hover:shadow-2xl cursor-pointer">
       <figure class="p-4">
-        <img [src]="product.image" [alt]="product.title" class="rounded" />
+        <img [src]="getSafeImageUrl(product.photo || '')" [alt]="product.name" class="rounded" />
       </figure>
       <div class="card-body">
-        <h2 class="card-title">{{ product.title }}</h2>
+        <h2 class="card-title">{{ product.name }}</h2>
         <p>{{ product.description }}</p>
         <div class="card-actions justify-end">
           <button class="btn btn-primary">Buy Now</button>
@@ -16,4 +16,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> 
+
+
+

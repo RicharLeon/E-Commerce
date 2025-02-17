@@ -21,6 +21,7 @@ public class ProductsConsultaDTO {
     private Double price;
     private Integer stock;
     private Boolean status;
+    private String description;
     private byte[] photo;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

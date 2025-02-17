@@ -11,9 +11,9 @@ public interface IProductsService {
 
     List<ProductsConsultaDTO> findAll();
     ProductsConsultaDTO findById(Integer id);
-    Products save(Products empleado);
+    Products save(Products product);
     void delete(Integer id);
-    Products update (Products empleado, Integer id);
+    Products update (Products product, Integer id);
     Page<ProductsConsultaDTO> getFilteredProducts(Integer categoryId,
                                                 Double minPrice,
                                                 Double maxPrice,

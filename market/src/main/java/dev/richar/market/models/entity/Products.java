@@ -35,6 +35,10 @@ public class Products {
     private byte[] photo;
 
     @Basic(fetch = FetchType.LAZY)
+    @Column(name = "description")
+    private String description;
+
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Basic(fetch = FetchType.LAZY)

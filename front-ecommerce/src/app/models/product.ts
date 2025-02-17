@@ -7,6 +7,7 @@ export interface Product {
     price: number;
     stock: number;
     status: boolean; 
+    description?: string;       // Descripción del producto
     photo?: string;             // URL de la imagen (opcional)
     createdAt?: Date;          // Fecha en formato ISO 8601
     updatedAt?: Date;          // Fecha en formato ISO 8601

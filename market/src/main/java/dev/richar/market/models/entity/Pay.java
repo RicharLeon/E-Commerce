@@ -2,6 +2,7 @@ package dev.richar.market.models.entity;
 
 import dev.richar.market.enums.StatusOrder;
 import dev.richar.market.enums.StatusPay;
+import dev.richar.market.models.dao.CarritoDao;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,11 +17,10 @@ public class Pay {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pago")
-    private Long idPago;
+    private Integer idPago;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_order", nullable = false)
-    private Orders orden;
+   @Column(name = "id_carrito")
+    private Integer idCarrito;
 
     @CreationTimestamp
     @Column(name = "fecha_pago", updatable = false)
@@ -35,4 +35,8 @@ public class Pay {
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_pago", nullable = false)
     private StatusPay estadoPago = StatusPay.PENDIENTE;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_carrito", insertable = false, updatable = false)
+    private Carrito carrito;
 }
