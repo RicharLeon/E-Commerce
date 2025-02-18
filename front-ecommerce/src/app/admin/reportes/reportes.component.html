@@ -1,1 +1,25 @@
-<p>reportes works!</p>
+<div class="w-full max-w-lg mx-auto p-8">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-lg font-medium mb-6">Descargar Informes</h2>
+
+        <div class="mt-8">
+            <button (click)="downloadProductos()" type="submit" class="w-full bg-green-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg focus:outline-none">
+                Informe de Productos Activos
+            </button>
+        </div>
+        <div class="mt-8">
+            <button (click)="downloadProductosMasVendidos()" type="submit" class="w-full bg-green-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg focus:outline-none">
+                Informe de Productos Mas Vendidos
+            </button>
+        </div>
+        <div class="mt-8">
+            <button (click)="downloadClientesFrecuentes()" type="submit" class="w-full bg-green-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg focus:outline-none">
+                Informe de Clientes Frecuentes
+            </button>
+        </div>
+
+        <div class="mt-8">
+            <button type="submit" class="w-full bg-green-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg focus:outline-none">Atras</button>
+        </div>
+    </div>
+</div>

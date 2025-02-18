@@ -15,6 +15,7 @@ import { CategoryCreateComponent } from './admin/categorys/category-create/categ
 import { CategoryEditComponent } from './admin/categorys/category-edit/category-edit.component';
 import { ProductsEditComponent } from './admin/products/products-edit/products-edit.component';
 import { ShoppingCardsComponent } from './business/shopping/shopping-cards/shopping-cards.component';
+import { ReportesComponent } from './admin/reportes/reportes.component';
 
 export const routes: Routes = [
     {path: 'login', component: LoginComponent},
@@ -35,6 +36,9 @@ export const routes: Routes = [
 
     // ruta de carrito
     {path: 'shopping-card/:id', component: ShoppingCardsComponent},
+
+    // informes
+    {   path: 'informes', component: ReportesComponent},
     {path: '**', component: PrincipalComponent},
     {path: '', redirectTo: '/principal', pathMatch: 'full'},
 ];

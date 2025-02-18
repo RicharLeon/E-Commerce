@@ -1,6 +1,8 @@
 package dev.richar.market.models.dao;
 
+import dev.richar.market.models.dto.ProductosInformeDTO;
 import dev.richar.market.models.dto.ProductsConsultaDTO;
+import dev.richar.market.models.dto.UsuariosInformeDTO;
 import dev.richar.market.models.entity.Products;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -22,6 +24,36 @@ public interface ProductsDao extends JpaRepository<Products, Integer>, JpaSpecif
             "where p.id = ?1"
     )
     Optional<ProductsConsultaDTO> findProductsForId(Integer id);
+
+
+    @Query(value = "SELECT name, price, status, stock FROM products WHERE status = true ",
+            nativeQuery = true)
+    List<ProductosInformeDTO> findActiveProducts();
+
+    @Query(value = "SELECT pro.name, pro.price, pro.status, pro.stock " +
+            "FROM pagos p " +
+            "INNER JOIN carrito c ON (p.id_carrito = c.id_carrito) " +
+            "INNER JOIN carrito_items ci ON (ci.id_carrito = c.id_carrito) " +
+            "INNER JOIN products pro ON (pro.id_product = ci.id_producto) " +
+            "WHERE p.estado_pago = 'COMPLETADO' " +
+            "AND ci.cantidad > 10 " +
+            "ORDER BY ci.cantidad DESC " +
+            "LIMIT 5 ",
+            nativeQuery = true)
+    List<ProductosInformeDTO> findProductsMasVendidos();
+
+    @Query(value = "SELECT c.id_usuario, pro.name, SUM(ci.cantidad) AS TOTAL " +
+            "FROM pagos p " +
+            "INNER JOIN carrito c ON (p.id_carrito = c.id_carrito) " +
+            "INNER JOIN carrito_items ci ON (ci.id_carrito = c.id_carrito) " +
+            "INNER JOIN products pro ON (pro.id_product = ci.id_producto) " +
+            "WHERE p.estado_pago = 'COMPLETADO' " +
+            "AND ci.cantidad > 10 " +
+            "GROUP BY c.id_usuario " +
+            "ORDER BY TOTAL DESC " +
+            "LIMIT 5",
+            nativeQuery = true)
+    List<UsuariosInformeDTO> findUsuariosMasFrecuentes();
 
 
 }

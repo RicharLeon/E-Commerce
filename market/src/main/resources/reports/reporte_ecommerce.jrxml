@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+			  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			  xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+			  name="reporte_ecommerce"
+			  pageWidth="595"
+			  pageHeight="842"
+			  uuid="bb178dfb-42f7-4f53-ab61-91677c1e56a4">
+
+	<!-- Parámetros (deben ir antes de los campos) -->
+	<parameter name="titulo" class="java.lang.String"/>
+
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+
+	<!-- Campos del DTO -->
+	<field name="name" class="java.lang.String"/>
+	<field name="price" class="java.lang.Double"/>
+	<field name="status" class="java.lang.Boolean"/>
+	<field name="stock" class="java.lang.Integer"/>
+
+	<!-- Resto del reporte... -->
+	<title>
+		<band height="70">
+			<staticText>
+				<reportElement x="0" y="20" width="100" height="30" uuid="15260884-f68e-4505-9499-fcd9db84c08b"/>
+				<text><![CDATA[Informe:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="20" width="400" height="30" uuid="ca5bc6bc-f3e5-4f53-a452-8b30d2f03f52"/>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+
+	<columnHeader>
+		<band height="30">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30"/>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="30"/>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="30"/>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="100" height="30"/>
+				<text><![CDATA[Stock]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+
+	<detail>
+		<band height="30">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="30"/>
+				<textFieldExpression><![CDATA["$" + $F{price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="30"/>
+				<textFieldExpression><![CDATA[$F{status} ? "Activo" : "Inactivo"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="100" height="30"/>
+				<textFieldExpression><![CDATA[$F{stock}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+
+</jasperReport>
