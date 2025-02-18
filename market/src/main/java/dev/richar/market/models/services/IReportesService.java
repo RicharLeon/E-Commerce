@@ -10,4 +10,5 @@ public interface IReportesService {
     byte[] reporteProductosGenerales() throws JRException;
     byte[] reporteCincoMasVendidos() throws JRException;
     byte[] reporteCincoMasFrecuentes() throws JRException, SQLException;
+    byte[] reporteGenerar(String reporteNAme) throws JRException;
 }

@@ -39,4 +39,13 @@ export class CarritoItemsService {
         })
       );
     }
+
+    deleteItems(id: number): Observable<CarritoItemsInterface[]> {
+      return this.http.delete<CarritoItemsInterface[]>(`${this.apiUrl}/${id}`).pipe(
+        catchError(error => {
+          console.error('Error deleting product', error);
+          return throwError(() => error);
+        })
+      );
+    }
 }

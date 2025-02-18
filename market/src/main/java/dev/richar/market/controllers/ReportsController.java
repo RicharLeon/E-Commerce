@@ -3,9 +3,7 @@ package dev.richar.market.controllers;
 import dev.richar.market.models.services.IReportesService;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,5 +73,21 @@ public class ReportsController {
             throw new RuntimeException(e);
         }
     }
+
+//    @GetMapping(value = "/mas-frecuentes")
+//    public ResponseEntity<byte[]> generarReporteCincoMasFrecuentes() {
+//        try {
+//            byte[] reporte = reportesService.reporteGenerar("reporte_cinco_clientes_ocacionales");
+//
+//
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.APPLICATION_PDF);
+//            headers.add("Content-Disposition", "inline; filename=reporte_cinco_clientes_ocacionales.pdf");
+//
+//            return new ResponseEntity<>(reporte, headers, HttpStatus.OK);
+//        } catch (JRException e) {
+//            return ResponseEntity.internalServerError().build();
+//        }
+//    }
 
 }

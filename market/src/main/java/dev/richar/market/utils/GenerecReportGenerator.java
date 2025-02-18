@@ -51,7 +51,6 @@ public class GenerecReportGenerator{
         // Cargar y compilar el archivo JRXML
         JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResourceAsStream(reportPath));
 
-        // Llenar el reporte con la conexión JDBC y los parámetros
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
 
         // Exportar el reporte a PDF y devolver como un arreglo de bytes

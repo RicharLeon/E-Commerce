@@ -79,6 +79,7 @@ export class ShoppingCardsComponent implements OnInit {
   getItems(id: number): void {
     this.carritoItemsService.getItems(id).subscribe((res: any) => {
       this.dataItems = res;
+      console.log("estos son la data", this.dataItems);
       
       this.sumaTotal(this.dataItems); 
 
@@ -139,6 +140,15 @@ export class ShoppingCardsComponent implements OnInit {
       });
     }
 
+
+    eliminarItems(id: number): void {
+      this.carritoItemsService.deleteItems(id).subscribe((res: any) => {
+
+        alert('Producto eliminado del carrito');
+
+        window.location.reload();
+      });
+    }
 
 
 }

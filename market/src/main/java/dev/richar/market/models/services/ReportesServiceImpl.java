@@ -7,12 +7,13 @@ import dev.richar.market.models.entity.Products;
 import dev.richar.market.utils.GenerecReportGenerator;
 import dev.richar.market.utils.PetReportGenerator;
 import lombok.RequiredArgsConstructor;
-import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -69,36 +70,13 @@ public class ReportesServiceImpl implements IReportesService {
         );
     }
 
-//    @Override
-//    public byte[] reporteCincoMasFrecuentes() throws JRException {
-//        List<UsuariosInformeDTO> productos = productsDao.findUsuariosMasFrecuentes();
-//
-//        List<UsuariosInformeDTO> reporteItems = productos.stream()
-//                .map(dto -> {
-//                    dto.getIdUsuario();
-//                    dto.getName();
-//                    dto.setTotal(dto.getTotal() != null ? new BigDecimal(dto.getTotal().intValue()) : null);
-//                    return dto;
-//        }).collect(Collectors.toList());
-//
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("titulo", "Informe 5 Productos mas Vendidos 2024");
-//
-//        return generecReportGenerator.exportToPdf(
-//                reporteItems,
-//                "/reports/reporte_ecommerce.jrxml",
-//                params
-//        );
-//    }
+
 
     @Override
     public byte[] reporteCincoMasFrecuentes() throws JRException, SQLException {
-        // Obtén la conexión JDBC desde el DataSource (asegúrate de tenerlo inyectado)
         try (Connection connection = dataSource.getConnection()) {
             Map<String, Object> params = new HashMap<>();
             params.put("titulo", "Informe 5 Productos mas Vendidos 2024");
-
-            // En este caso, el reporte se llena ejecutando la query interna del JRXML
             return generecReportGenerator.exportToPdf2(
                     connection,
                     "/reports/reporte_ecommerce.jrxml",
@@ -107,6 +85,20 @@ public class ReportesServiceImpl implements IReportesService {
         }
     }
 
+
+    @Override
+    public byte[] reporteGenerar(String reporteNAme) throws JRException {
+
+        InputStream reportStream = getClass().getResourceAsStream("/reports/" + reporteNAme + ".jrxml");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("titulo", "Informe 5 Productos mas Vendidos 2024");
+
+        //llenado
+        JasperPrint jasperPrint= JasperFillManager.fillReport(reportStream, parameters, new JREmptyDataSource());
+
+        return JasperExportManager.exportReportToPdf(jasperPrint);
+
+    }
 
 
 

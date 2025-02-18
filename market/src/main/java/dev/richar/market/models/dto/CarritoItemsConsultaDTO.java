@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 
 public class CarritoItemsConsultaDTO {
 
+
     private Boolean isRandom;
     private Integer idProduct;
     private Integer idCarritoItem;
