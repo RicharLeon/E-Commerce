@@ -15,3 +15,14 @@ export interface Product {
     originalPrice?: number;     // Para guardar precio original durante edición
 
   }
+
+  export interface PagedResponse {
+    items: Product[];
+    content: Product[];
+    totalPages: number;
+    totalElements: number;
+    size: number;
+    number: number;
+    first: boolean;
+    last: boolean;
+  }

@@ -5,3 +5,4 @@ export interface Page<T> {
     size: number;
     number: number;
   }
+  

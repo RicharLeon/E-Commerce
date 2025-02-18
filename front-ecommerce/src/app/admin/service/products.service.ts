@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
-import { Product } from '../../models/product';
+import { PagedResponse, Product } from '../../models/product';
 import { Page } from '../../models/page';
 
 
@@ -35,7 +35,7 @@ export class ProductService {
   }
 
   // Get products with filters
-  getFilteredProducts(
+  getProductsFilter(
     categoryId?: number,
     minPrice?: number,
     maxPrice?: number,
@@ -44,32 +44,21 @@ export class ProductService {
     categoryName?: string,
     page: number = 0,
     size: number = 10
-  ): Observable<Page<Product>> {
+  ): Observable<Product> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
 
-    if (categoryId != null) {
-      params = params.set('categoryId', categoryId.toString());
-    }
-    if (minPrice != null) {
-      params = params.set('minPrice', minPrice.toString());
-    }
-    if (maxPrice != null) {
-      params = params.set('maxPrice', maxPrice.toString());
-    }
-    if (minStock != null) {
-      params = params.set('minStock', minStock.toString());
-    }
-    if (status) {
-      params = params.set('status', status);
-    }
-    if (categoryName) {
-      params = params.set('categoryName', categoryName);
-    }
+    if (categoryId !== undefined) params = params.set('categoryId', categoryId.toString());
+    if (minPrice !== undefined) params = params.set('minPrice', minPrice.toString());
+    if (maxPrice !== undefined) params = params.set('maxPrice', maxPrice.toString());
+    if (minStock !== undefined) params = params.set('minStock', minStock.toString());
+    if (status !== undefined) params = params.set('status', status);
+    if (categoryName !== undefined) params = params.set('categoryName', categoryName);
 
-    return this.http.get<Page<Product>>(this.apiUrl, { params });
+    return this.http.get<Product>(this.apiUrl, { params });
   }
+
 
 
   // Add a new product

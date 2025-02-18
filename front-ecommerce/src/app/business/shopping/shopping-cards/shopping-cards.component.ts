@@ -123,6 +123,7 @@ export class ShoppingCardsComponent implements OnInit {
       let resultado = (cantidad * porcentaje) / 100;
       this.totalConDescuentos = cantidad - resultado;
 
+      console.log('total con descuentos:', this.totalConDescuentos);
       return this.totalConDescuentos;
     }
 

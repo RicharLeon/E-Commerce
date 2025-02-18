@@ -10,11 +10,14 @@ import java.text.MessageFormat;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class CategoryServiceImpl implements ICategoryService{
 
-    @Autowired
+
     private final CategoryDao categoryDao;
+
+    public CategoryServiceImpl(CategoryDao categoryDao) {
+        this.categoryDao = categoryDao;
+    }
 
     @Override
     public List<Category> findAll() {

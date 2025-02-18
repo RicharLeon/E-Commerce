@@ -27,6 +27,10 @@ export class ReportesComponent implements OnInit {
   downloadClientesFrecuentes() {
     this.reporteService.descargarReporteClientesFrecuentes();
   }
-
+  
+  //merodo para ir atras
+  goBack() {
+    window.history.back();
+  }
 
 }
