@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/reportes")
@@ -69,6 +71,8 @@ public class ReportsController {
 
         } catch (JRException e) {
             return ResponseEntity.internalServerError().build();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

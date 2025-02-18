@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ public class GenerecReportGenerator{
     public <T> byte[] exportToPdf(List<T> data, String reportPath, Map<String, Object> parameters) throws JRException {
         return JasperExportManager.exportReportToPdf(getReport(data, reportPath, parameters));
     }
+
 
     public <T> byte[] exportToXls(List<T> data, String reportPath, Map<String, Object> parameters) throws JRException {
         ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
@@ -44,4 +46,18 @@ public class GenerecReportGenerator{
 
         return JasperFillManager.fillReport(jasperReport, parameters, dataSource);
     }
+
+    public byte[] exportToPdf2(Connection connection, String reportPath, Map<String, Object> parameters) throws JRException {
+        // Cargar y compilar el archivo JRXML
+        JasperReport jasperReport = JasperCompileManager.compileReport(getClass().getResourceAsStream(reportPath));
+
+        // Llenar el reporte con la conexión JDBC y los parámetros
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
+
+        // Exportar el reporte a PDF y devolver como un arreglo de bytes
+        return JasperExportManager.exportReportToPdf(jasperPrint);
+    }
+
+
+
 }

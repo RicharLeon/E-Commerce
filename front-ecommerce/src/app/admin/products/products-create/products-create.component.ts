@@ -54,13 +54,8 @@ export class ProductsCreateComponent implements OnInit {
     if (this.productForm.valid) {
       console.log(this.productForm.value);
 
-
-      // convertirlo a number
-
-      // Obtener el ID y el nombre de la categoría seleccionada y convertirlo a numebr
       const selectedCategoryId = Number(this.productForm.value.idCategory);
          
-      // convertir el precio a número
       const priceString = this.productForm.value.price.replace(/\D/g, '');
       const priceNumber = parseFloat(priceString); // Divide si manejas centavos
       

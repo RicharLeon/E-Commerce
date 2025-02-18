@@ -32,7 +32,9 @@ export class CategoryCreateComponent {
         description: this.productForm.value.descripcion,
         status: this.productForm.value.status === 'activo' ? true : false,
       };
-      console.log('Datos mapeados:', this.productForm.value);
+      alert("producto agregado con exito");
+
+      this.goBack();
       this.saveCategory(category);
     //  this.goBack();
     } else {

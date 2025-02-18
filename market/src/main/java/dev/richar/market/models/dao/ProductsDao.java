@@ -36,19 +36,18 @@ public interface ProductsDao extends JpaRepository<Products, Integer>, JpaSpecif
             "INNER JOIN carrito_items ci ON (ci.id_carrito = c.id_carrito) " +
             "INNER JOIN products pro ON (pro.id_product = ci.id_producto) " +
             "WHERE p.estado_pago = 'COMPLETADO' " +
-            "AND ci.cantidad > 10 " +
             "ORDER BY ci.cantidad DESC " +
             "LIMIT 5 ",
             nativeQuery = true)
     List<ProductosInformeDTO> findProductsMasVendidos();
 
-    @Query(value = "SELECT c.id_usuario, pro.name, SUM(ci.cantidad) AS TOTAL " +
+    @Query(value = "SELECT c.id_usuario, ou.name, SUM(ci.cantidad) AS total " +
             "FROM pagos p " +
             "INNER JOIN carrito c ON (p.id_carrito = c.id_carrito) " +
             "INNER JOIN carrito_items ci ON (ci.id_carrito = c.id_carrito) " +
             "INNER JOIN products pro ON (pro.id_product = ci.id_producto) " +
+            "INNER JOIN ourusers ou ON (ou.id=c.id_usuario) " +
             "WHERE p.estado_pago = 'COMPLETADO' " +
-            "AND ci.cantidad > 10 " +
             "GROUP BY c.id_usuario " +
             "ORDER BY TOTAL DESC " +
             "LIMIT 5",

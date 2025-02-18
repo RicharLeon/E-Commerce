@@ -28,17 +28,13 @@ export class RegisterComponent {
 
   async handleSubmit() {
 
-    // Check if all fields are not empty
-    if (!this.formData.name || !this.formData.email || !this.formData.password || !this.formData.role || !this.formData.city) {
-      this.showError('Please fill in all fields.');
+
+    if (!this.formData.name || !this.formData.email || !this.formData.password ||  !this.formData.city) {
+      this.showError('llenar campos.');
       return;
     }
 
-    // Confirm registration with user
-    const confirmRegistration = confirm('Are you sure you want to register this user?');
-    if (!confirmRegistration) {
-      return;
-    }
+   
 
     try {
       const token = localStorage.getItem('token');
@@ -60,7 +56,7 @@ export class RegisterComponent {
   showError(message: string) {
     this.errorMessage = message;
     setTimeout(() => {
-      this.errorMessage = ''; // Clear the error message after the specified duration
+      this.errorMessage = ''; 
     }, 3000);
   }
 }

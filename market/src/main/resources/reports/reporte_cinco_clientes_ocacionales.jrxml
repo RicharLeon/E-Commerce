@@ -8,20 +8,34 @@
 			  pageHeight="842"
 			  uuid="bb178dfb-42f7-4f53-ab61-91677c1e56a4">
 
-	<!-- Parámetros (deben ir antes de los campos) -->
+	<!-- Parámetros (van antes de los campos) -->
 	<parameter name="titulo" class="java.lang.String"/>
 
-	<queryString>
-		<![CDATA[]]>
+	<!-- Query incorporada en el reporte -->
+	<queryString language="SQL">
+		<![CDATA[
+            SELECT
+                c.id_usuario AS idUsuario,
+                ou.name,
+                CAST(SUM(ci.cantidad) AS INTEGER) AS total
+            FROM pagos p
+            INNER JOIN carrito c ON (p.id_carrito = c.id_carrito)
+            INNER JOIN carrito_items ci ON (ci.id_carrito = c.id_carrito)
+            INNER JOIN products pro ON (pro.id_product = ci.id_producto)
+            INNER JOIN ourusers ou ON (ou.id = c.id_usuario)
+            WHERE p.estado_pago = 'COMPLETADO'
+            GROUP BY c.id_usuario, ou.name
+            ORDER BY total DESC
+            LIMIT 5
+        ]]>
 	</queryString>
 
-	<!-- Campos del DTO -->
+	<!-- Definición de campos (asegúrate de que los alias en la query coincidan con los nombres de los campos) -->
 	<field name="idUsuario" class="java.lang.Integer"/>
 	<field name="name" class="java.lang.String"/>
 	<field name="total" class="java.lang.Integer"/>
 
-
-	<!-- Resto del reporte... -->
+	<!-- Resto del reporte (título, encabezados, detalle, etc.) -->
 	<title>
 		<band height="70">
 			<staticText>
@@ -42,14 +56,13 @@
 				<text><![CDATA[Id Usuario]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="30"/>
+				<reportElement x="100" y="0" width="100" height="30"/>
 				<text><![CDATA[Nombre Usuario]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="0" width="100" height="30"/>
+				<reportElement x="200" y="0" width="100" height="30"/>
 				<text><![CDATA[Total]]></text>
 			</staticText>
-
 		</band>
 	</columnHeader>
 
@@ -60,11 +73,11 @@
 				<textFieldExpression><![CDATA[$F{idUsuario}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="100" height="30"/>
+				<reportElement x="100" y="0" width="100" height="30"/>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="300" y="0" width="100" height="30"/>
+				<reportElement x="200" y="0" width="100" height="30"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 		</band>
